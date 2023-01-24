@@ -39,12 +39,12 @@
           <p>{{ post.text }}</p>
           {% if post.author.id == user.id %}
             <div class="col-12 col-md-9">
-              <form method="post" action="{% url 'posts:post_edit' post.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">
-                  Редактировать запись
-                </button>
-              </form>
+              {% csrf_token %}
+              <a class="btn btn-lg btn-primary"
+                 href="{% url 'posts:post_edit' post.id %}" role="button"
+              >
+                Редактировать запись
+              </a>
             </div>
           {% endif %}
           {% load user_filters %}

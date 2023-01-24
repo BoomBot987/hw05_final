@@ -17,7 +17,7 @@ def get_paginated_page(request, posts):
 def index(request):
     """Главная страница."""
     template = 'posts/index.html'
-    posts = Post.objects.all().order_by('-created')
+    posts = Post.objects.all()
     page_obj = get_paginated_page(request, posts)
     context = {
         'posts': posts,
@@ -133,8 +133,8 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
-    if (request.user != author
-            and not Follow.objects.filter(user=request.user, author=author)):
+    follow_obj = Follow.objects.filter(user=request.user, author=author)
+    if request.user != author and not follow_obj.exists():
         Follow.objects.create(user=request.user, author=author)
     return redirect('posts:follow_index')
 
